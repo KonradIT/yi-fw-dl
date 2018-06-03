@@ -6,8 +6,10 @@ import textwrap
 import requests
 import sys
 ap = argparse.ArgumentParser()
-ap.add_argument("camera",action="store",type=str)
-ap.add_argument("-a", action="store_true", default=False)
+ap.add_argument("camera",help="Camera Serial Number", action="store",type=str)
+ap.add_argument("-a", help="List previous firmwares", action="store_true", default=False)
+ap.add_argument("-n", help="Custom filename", action="store")
+ap.add_argument("-c", help="Removes download confirmation", action="store_true", default=False)
 args = vars(ap.parse_args())
 
 def print_data(choice):
@@ -18,9 +20,12 @@ def print_data(choice):
 	print("Release notes:")
 	print(textwrap.dedent(j[choice]["firmwareMemo"]).strip())
 	print("")
-	print("Press enter to download", end="")
-	input()
-	fw_filename="firmware-"+j[choice]["firmwareCode"].replace(".","_")+".zip"
+	if args["c"] == False:
+		print("Press enter to download", end="")
+		input()
+	fw_filename="firmware-"+j[choice]["firmwareCode"].replace(".","_")+".bin"
+	if args["n"] != None:
+		fw_filename = args["n"]
 	download(j[choice]["firmwareUrl"], fw_filename)	
 
 def download(url, fw_filename):
@@ -56,7 +61,8 @@ else:
 	j=json.loads(raw)
 	for index, i in enumerate(j):
 		print(index,"-",i["firmwareCode"])
-	choice=int(input("Firmware download: [0 - " + str(len(j)-1) + "]: "))
+	try:
+		choice=int(input("Firmware download: [0 - " + str(len(j)-1) + "]: "))
+	except ValueError:
+		choice=0
 	print_data(choice)
-
-

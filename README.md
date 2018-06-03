@@ -13,9 +13,10 @@ Supports Yi 4K, Yi 4K+, Yi Lite
 *  -n N        Custom filename
 *  -c          Removes download confirmation
 
+---
 
-* Download latest Yi Lite firmware: python yi-fw-dl.py J11V21C 
-* Choose which firmware to download: python yi-fw-dl.py J11V21C -a
-* Download latest firmware as firmware.bin: python yi-fw-dl.py J11V21C -n firmware.bin
+* Download latest Yi Lite firmware: ```python yi-fw-dl.py J11V21C ```
+* Choose which firmware to download: ```python yi-fw-dl.py J11V21C -a```
+* Download latest firmware as firmware.bin: ```python yi-fw-dl.py J11V21C -n firmware.bin```
     
 
